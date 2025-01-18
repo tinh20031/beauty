@@ -5,9 +5,9 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Sao chép file JAR từ môi trường build vào container
-COPY target/*.jar app.jar
+COPY target/*.beautytouch-0.0.1-SNAPSHOT.jar beautytouch-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8080
 
 # Khởi động ứng dụng
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "beautytouch-0.0.1-SNAPSHOT.jar"]
