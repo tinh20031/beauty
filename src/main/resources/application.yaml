@@ -3,7 +3,6 @@ spring:
     url: "jdbc:mysql://localhost:3306/beautytouch?useSSL=false&serverTimezone=UTC"
     username: root
     password: 123456
-
   jpa:
     hibernate:
       ddl-auto: none # Tùy chọn tốt cho môi trường phát triển
@@ -42,3 +41,5 @@ cloudinary:
   api:
     key: 443987573159755
     secret: gspgdRsnmPl0uxg5XCiqa0-H-Ig
+server:
+  port: 8080
