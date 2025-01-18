@@ -1,6 +1,8 @@
 package com.beautytouch.beautytouch.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -28,11 +30,8 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Lob
     @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)  // Ánh xạ ENUM vào cơ sở dữ liệu dưới dạng String
-    private Role role;
-
+    private String role;
     @OneToMany(mappedBy = "user")
     private Set<appointments> appointments = new LinkedHashSet<>();
 
@@ -41,6 +40,18 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Studio> studios = new LinkedHashSet<>();
+
+    @Column(name = "isActive")
+    private Boolean isActive;
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
 
     // Getter và setter cho các thuộc tính
     public Integer getId() {
@@ -84,11 +95,11 @@ public class User {
     }
 
     // Getter và setter cho trường role đã được thay đổi thành kiểu ENUM
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

@@ -2,7 +2,6 @@ package com.beautytouch.beautytouch.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
-
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;

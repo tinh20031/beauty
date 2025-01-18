@@ -34,7 +34,6 @@ public class BeautyService {
 
     @OneToMany(mappedBy = "service")
     private Set<com.beautytouch.beautytouch.entity.StudioService> studioServices = new LinkedHashSet<>();
-
     public Integer getId() {
         return id;
     }

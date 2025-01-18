@@ -12,6 +12,8 @@ public interface StudioRepositories extends JpaRepository<Studio, Integer> {
     List<Studio> id(Integer id);
 
     Studio findByStudioName(String studioName);
+    List<Studio> findStudioByUserId(Integer UserId);
+    List<Studio> findByUserId(Integer userId);
 }
 
 

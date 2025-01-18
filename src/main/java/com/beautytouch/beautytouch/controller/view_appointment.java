@@ -6,6 +6,9 @@ import com.beautytouch.beautytouch.services.Studio_Service;
 import com.beautytouch.beautytouch.services.Studio_ServiceService;
 import com.beautytouch.beautytouch.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,19 +35,22 @@ public class view_appointment {
             @RequestParam String price,
             @RequestParam String date,
             @RequestParam String time,
-            @RequestParam String studioId,  // studioId is still a String
-            @RequestParam String serviceId) {  // serviceId is still a String
+            @RequestParam String studioId,
+            @RequestParam String serviceId) {
 
         try {
-            // Convert studioId and serviceId from String to Integer
-            Integer studioIdInt = Integer.parseInt(studioId);  // Convert studioId to Integer
-            Integer serviceIdInt = Integer.parseInt(serviceId);  // Convert serviceId to Integer
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            User currentUser = userService.getUser(username);
+
+            Integer studioIdInt = Integer.parseInt(studioId);
+            Integer serviceIdInt = Integer.parseInt(serviceId);
 
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate appointmentDate = LocalDate.parse(date, dateFormatter);  // Use LocalDate instead of LocalDateTime
             String formattedDate = appointmentDate.toString(); // Save in 'yyyy-MM-dd' format
 
-            // Parse time (use the time string)
+
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mma");
             LocalTime appointmentTime = LocalTime.parse(time.toUpperCase(), timeFormatter);
             String formattedTime = appointmentTime.format(DateTimeFormatter.ofPattern("h:mma"));
@@ -53,24 +59,24 @@ public class view_appointment {
             appointment.setTime(formattedTime);
             appointment.setPriceAppoint(price);
             appointment.setStatus("pending");
+            appointment.setUser(currentUser);
 
-            // Fetch the studio and service objects using the IDs (converted to Integer)
             Studio studio = studio_service.GetStudioById(studioIdInt);  // Using Integer version
             appointment.setStudio(studio);
 
             StudioService studioServiceEntity = studio_serviceService.getServiceById(serviceIdInt);  // Using Integer version
             appointment.setService(studioServiceEntity);
 
-            // Call the service layer to save the appointment
+
             appointmentService.saveAppointment(appointment);
 
-            // Redirect or return success message
-            return "view-appointment";  // Redirect to a page that shows appointments or a confirmation page
+
+            return "redirect:/list-appointments";
 
         } catch (NumberFormatException e) {
-            // Handle error if the studioId or serviceId are not valid integers
+
             e.printStackTrace();
-            return "error";  // You can return an error view or handle it differently
+            return "error";
         }
     }
 }

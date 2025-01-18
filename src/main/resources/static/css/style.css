@@ -367,6 +367,7 @@ a:hover {
     display: inline-block;
     min-width: 100px;
     text-align: center;
+    white-space: nowrap;
 }
 .status-confirmed {
     background-color: #ff69b4;
@@ -403,6 +404,146 @@ a:hover {
 .status-description li {
     margin-bottom: 10px;
 }
+/* Đảm bảo nút đăng xuất nằm ngang với các phần tử khác */
+/*.logout-btn {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    background-color: #f0f0f0; !* Màu nền mặc định *!*/
+/*    border: 1px solid #ccc;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 5px;*/
+/*    transition: background-color 0.3s ease, transform 0.3s ease;*/
+/*}*/
 
+/* Thêm hiệu ứng khi di chuột vào nút đăng xuất */
+.logout-btn:hover {
+    background-color: #f5c6d3; /* Màu hồng nhạt */
+    color: black; /* Màu chữ trắng */
+    border-color: #f5c6d3; /* Màu viền hồng */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng mượt */
+}
 
+/* Đảm bảo icon và chữ trong nút đăng xuất căn chỉnh tốt */
+.logout-btn svg {
+    transition: transform 0.3s ease;  /* Khoảng cách giữa icon và chữ */
+}
+.logout-btn:hover svg {
+    transform: scale(1.2);
+}
 
+/* css cho studio */
+.sidebar {
+    height: 100vh;
+    background-color: pink ; /* Màu hồng nhạt */
+    color: white;
+    padding-top: 20px;
+}
+.sidebar a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+}
+.sidebar a:hover {
+    background-color: pink ;
+}
+.sidebar .active {
+    background-color: #ff9999;
+}
+.content {
+    padding: 20px;
+}
+.navbar-brand img {
+    height: 40px;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+/* Custom button styling */
+.btn.btn-add {
+    background-color: pink;
+    color: white;
+    margin-bottom: 2px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.btn.btn-add:hover {
+    background-color: pink ;
+    transform: scale(1.05);
+}
+.btn-secondary {
+    background-color: #6c757d; /* Màu nền mặc định */
+    color: #fff; /* Màu chữ mặc định */
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng mượt */
+}
+
+.btn-secondary:hover {
+    background-color: pink; /* Màu nền hồng khi di chuột */
+    color: #fff; /* Đảm bảo màu chữ dễ nhìn */
+}
+
+.verification-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.verification-container h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+.verification-container p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #666666;
+}
+
+.verification-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.verification-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.verification-container button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.verification-container button:hover {
+    background-color: #ff99c2; /* Nền màu hồng nhạt khi hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.verification-container .alert {
+    margin-top: 20px;
+}

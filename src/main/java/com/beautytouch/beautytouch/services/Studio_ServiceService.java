@@ -1,8 +1,10 @@
 package com.beautytouch.beautytouch.services;
 
 import com.beautytouch.beautytouch.entity.Studio;
-import com.beautytouch.beautytouch.entity.StudioService;
 import com.beautytouch.beautytouch.entity.BeautyService;  // Đảm bảo import BeautyService
+import com.beautytouch.beautytouch.entity.StudioService;
+import com.beautytouch.beautytouch.entity.appointments;
+import com.beautytouch.beautytouch.repositories.AppointmentRepository;
 import com.beautytouch.beautytouch.repositories.ServiceRepositories;
 
 import com.beautytouch.beautytouch.repositories.Service_StudioRepositories;
@@ -17,7 +19,8 @@ public class Studio_ServiceService {
 
     private final StudioRepositories studioRepositories;
     private final ServiceRepositories serviceRepositories;
-
+@Autowired
+AppointmentRepository appointmentRepository;
     @Autowired
     public Studio_ServiceService(StudioRepositories studioRepositories, ServiceRepositories serviceRepositories) {
         this.studioRepositories = studioRepositories;
@@ -33,6 +36,7 @@ public class Studio_ServiceService {
         return serviceRepositories.findByStudioId(studioId);
     }
 
+
     public StudioService getServiceByStudioIdAndServiceId(Integer studioId, Integer serviceId) {
         return serviceRepositories.findByStudioIdAndServiceId(studioId, serviceId);
     }
@@ -44,4 +48,19 @@ public class Studio_ServiceService {
     public StudioService getServiceById(Integer serviceId ) {
        return serviceRepositories.getStudioServiceById(serviceId);
     }
+    public void saveService(StudioService studioService) {
+        serviceRepositories.save(studioService);
+    }
+    public void deleteServiceById(Integer serviceId) {
+        // Check for related appointments before deleting
+        List<appointments> relatedAppointments = appointmentRepository.findByServiceId(serviceId);
+
+        if (!relatedAppointments.isEmpty()) {
+            throw new IllegalStateException("không thể xóa dịch vụ liên quan tới đặt lịch ");
+        }
+
+        // Delete the service
+        serviceRepositories.deleteById(serviceId);
+    }
+
 }
