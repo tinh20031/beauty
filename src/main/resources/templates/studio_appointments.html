@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Thêm Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- style -->
+  <link rel="stylesheet" href="/css/style.css">
+  <title>BeautyTouch</title>
+</head>
+<body>
+<!-- Your body content goes here -->
+<!--taskbar-->
+<div class="d-flex">
+  <div th:replace="fragments/taskbar_studio :: taskbar_studio"></div>
+
+  <div class="container mt-5">
+    <h1 class="mb-4">Studio Appointments</h1>
+
+    <!-- Dropdown for selecting a studio -->
+    <form method="GET" action="/studio-appointments">
+      <div class="form-group mb-3">
+        <label for="studioSelect">Select a Studio:</label>
+        <select name="studioId" id="studioSelect" class="form-select" onchange="this.form.submit()">
+          <option value="-1" th:selected="${selectedStudioId == -1}">-- All Studios --</option>
+          <th:block th:each="studio : ${studios}">
+            <option th:value="${studio.id}" th:text="${studio.studioName}"
+                    th:selected="${selectedStudioId == studio.id}"></option>
+          </th:block>
+        </select>
+      </div>
+    </form>
+
+    <!-- Appointments table -->
+    <table class="table table-bordered mt-4" th:if="${appointments != null && appointments.size() > 0}">
+      <thead>
+      <tr>
+        <th>Date-Time</th>
+        <th>Người Dùng</th>
+        <th>Dịch Vụ</th>
+        <th>Giá Dịch Vụ</th>
+        <th>Trạng Thái</th>
+        <th>Hành Động</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Loop through appointments -->
+      <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.appointmentDate}"></td>
+        <td th:text="${appointment.user.email}"></td>
+        <td th:text="${appointment.service.service.serviceName}"></td>
+        <td th:text="${appointment.service.customPrice}"></td>
+        <td>
+          <span  th:text="${appointment.status}"></span>
+        </td>
+        <td>
+          <form th:action="@{/appointments/update-status}" method="POST">
+          <input type="hidden" name="appointmentId" th:value="${appointment.id}" />
+          <input type="hidden" name="status" value="in progress" />
+          <button type="submit" class="btn btn-primary">Xác nhận</button>
+        </form>
+          <span th:switch="${appointment.status}">
+    <span th:case="'paid'">
+        <form th:action="@{/appointments/confirm}" method="POST">
+            <input type="hidden" name="appointmentId" th:value="${appointment.id}" />
+            <button type="submit" class="btn btn-success">Chuyển trạng thái: Đã xác nhận</button>
+        </form>
+    </span>
+</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Place the Bootstrap JS script just before closing body tag -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
