@@ -44,6 +44,17 @@ public class User {
     @Column(name = "isActive")
     private Boolean isActive;
 
+    @OneToMany(mappedBy = "user")
+    private Set<EmailVerificationToken> emailVerificationTokens = new LinkedHashSet<>();
+
+    public Set<EmailVerificationToken> getEmailVerificationTokens() {
+        return emailVerificationTokens;
+    }
+
+    public void setEmailVerificationTokens(Set<EmailVerificationToken> emailVerificationTokens) {
+        this.emailVerificationTokens = emailVerificationTokens;
+    }
+
     public Boolean getIsActive() {
         return isActive;
     }

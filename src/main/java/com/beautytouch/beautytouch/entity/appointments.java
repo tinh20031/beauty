@@ -17,9 +17,8 @@ public class appointments {
     @Column(name = "appointment_date", columnDefinition = "VARCHAR(255)")
     private String  appointmentDate;
 
-    @Column(name = "status", nullable = false)
-    @Lob
-    @ColumnDefault("'pending'")
+
+    @Column(name = "status", nullable = false,length = 20)
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

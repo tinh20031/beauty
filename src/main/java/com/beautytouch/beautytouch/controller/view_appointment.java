@@ -58,7 +58,10 @@ public class view_appointment {
             appointment.setAppointmentDate(formattedDate);
             appointment.setTime(formattedTime);
             appointment.setPriceAppoint(price);
-            appointment.setStatus("pending");
+
+            appointment.setStatus("pending".trim().toLowerCase());
+//            appointment.setStatus(AppointmentStatus.PENDING); // Đặt trạng thái mặc định
+
             appointment.setUser(currentUser);
 
             Studio studio = studio_service.GetStudioById(studioIdInt);  // Using Integer version

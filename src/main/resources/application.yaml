@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: "jdbc:mysql://localhost:3306/beautytouch?useSSL=false&serverTimezone=UTC"
-    username: root
-    password: 123456
+    url: jdbc:postgresql://dpg-cu5vfll6l47c73btda5g-a.oregon-postgres.render.com/beautytouch
+    username: beautytouch_user
+    password: DeN9EehCSAyx0MEl0ve8FGpZ5tBwA0u1
+
   jpa:
     hibernate:
       ddl-auto: none # Tùy chọn tốt cho môi trường phát triển

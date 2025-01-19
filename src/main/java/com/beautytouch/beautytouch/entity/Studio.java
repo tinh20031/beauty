@@ -1,6 +1,8 @@
 package com.beautytouch.beautytouch.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -50,16 +52,29 @@ public class Studio {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "`kinh nghiệm`", nullable = false, length = 45)
-    private String kinhNghiM;
+//    @Column(name = "`kinh nghiệm`", nullable = false, length = 45)
+//    private String kinhNghiM;
 
-    public String getKinhNghiM() {
-        return kinhNghiM;
+    @Size(max = 45)
+    @NotNull
+    @Column(name = "kinh_nghiem", nullable = false, length = 45)
+    private String kinhNghiem;
+
+    public String getKinhNghiem() {
+        return kinhNghiem;
     }
 
-    public void setKinhNghiM(String kinhNghiM) {
-        this.kinhNghiM = kinhNghiM;
+    public void setKinhNghiem(String kinhNghiem) {
+        this.kinhNghiem = kinhNghiem;
     }
+
+//    public String getKinhNghiM() {
+//        return kinhNghiM;
+//    }
+//
+//    public void setKinhNghiM(String kinhNghiM) {
+//        this.kinhNghiM = kinhNghiM;
+//    }
 
     public String getImage() {
         return image;

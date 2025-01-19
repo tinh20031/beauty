@@ -111,7 +111,7 @@ public String viewAppointments(Model model) {
                 studio.setAddress(address);
                 studio.setEmail(email);
                 studio.setPhone(phone);
-                studio.setKinhNghiM(kinhNghiM);
+                studio.setKinhNghiem(kinhNghiM);
 
                 // Nếu có hình ảnh mới, upload và cập nhật URL
                 if (imageFile != null && !imageFile.isEmpty()) {
@@ -126,7 +126,7 @@ public String viewAppointments(Model model) {
                 studio.setAddress(address);
                 studio.setEmail(email);
                 studio.setPhone(phone);
-                studio.setKinhNghiM(kinhNghiM);
+                studio.setKinhNghiem(kinhNghiM);
 
                 // Lấy thông tin người dùng hiện tại
 
