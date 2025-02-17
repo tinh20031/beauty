@@ -181,8 +181,8 @@ public class bookAppointment {
 
         // Xác định mức giảm giá
         double discountPercentage = serviceType.equalsIgnoreCase("combo chụp ảnh") ? 0.12 : 0.10;
-        double discountAmount = originalPrice * discountPercentage; // Tính tiền được giảm
-        double paymentAmount = originalPrice - discountAmount; // Giá cuối cùng sau giảm
+        double discountAmount = originalPrice * discountPercentage;
+        double paymentAmount = originalPrice - discountAmount;
 
         System.out.println("Mức giảm giá thực tế: " + (discountPercentage * 100) + "%");
         System.out.println("Số tiền giảm: " + discountAmount);

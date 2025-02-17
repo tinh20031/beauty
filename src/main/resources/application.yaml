@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-cu5vfll6l47c73btda5g-a.oregon-postgres.render.com/beautytouch
-    username: beautytouch_user
-    password: DeN9EehCSAyx0MEl0ve8FGpZ5tBwA0u1
+    url: jdbc:postgresql://dpg-cuov3ilumphs73e2ajb0-a.oregon-postgres.render.com/backup_eesc
+    username: backup_eesc_user
+
+    password: zEqglicf3XZwelDgPxNwznzf1RM6C4JS
 
   jpa:
     hibernate:
