@@ -58,6 +58,23 @@ public String verify_email() {
     public String appoint_studio() {
         return "redirect:/studio-appointments";
     }
+
+
+
+    //role cho admin
+    @GetMapping("/admin/template_admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminTemplate() {
+        return "template_admin"; // Điều hướng đến trang template_admin.html
+    }
+
+    @GetMapping("/admin/view_appoint")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String admin_view() {
+        return "forward:/admin_appoint"; // Chuyển tiếp thay vì redirect
+    }
+
+
 }
 
 

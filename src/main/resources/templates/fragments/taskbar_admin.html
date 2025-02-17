@@ -1,0 +1,23 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:fragment="taskbar_admin">
+
+  <div class="sidebar d-flex flex-column">
+    <div sec:authorize="isAuthenticated()">
+      <span>Welcome, <span sec:authentication="principal.username"></span></span>
+    </div>
+    <a  href="/admin/view_appoint">
+      <i class="fas fa-user"></i> Quản Lí Lịch Đặt
+    </a>
+
+    <!--    <a href="#">-->
+    <!--      <i class="fas fa-tools"></i> Device Settings-->
+    <!--    </a>-->
+    <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+    <form id="logout-form" th:action="@{/logout}" method="POST" style="display: none;">
+      <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+    </form>
+  </div>
+</div>

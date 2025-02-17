@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
 
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/index", "/css/**", "/image/**","/login", "/signup","/register","/","/logout","/verify_email_template","/shop","/studio/{id}").permitAll()
+                        .requestMatchers("/index", "/css/**", "/image/**","/login", "/signup","/register","/","/logout","/verify_email_template","/shop","/studio/{id}","/verify-email").permitAll()
                         .requestMatchers("/user/**").hasRole("USERS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/role_studio/**").hasRole("STUDIO")

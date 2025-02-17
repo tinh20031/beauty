@@ -32,6 +32,7 @@ public class StudioService {
     @OneToMany(mappedBy = "service")
     private Set<appointments> appointments = new LinkedHashSet<>();
 
+
     @OneToMany(mappedBy = "service")
     private Set<Review> reviews = new LinkedHashSet<>();
 

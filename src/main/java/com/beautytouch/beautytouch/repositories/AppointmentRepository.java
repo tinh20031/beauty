@@ -16,4 +16,5 @@ public interface AppointmentRepository extends JpaRepository<appointments,Intege
 
 
 
+
 }

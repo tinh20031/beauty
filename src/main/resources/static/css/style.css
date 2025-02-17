@@ -1,9 +1,8 @@
 :root {
-    --body-font: 'Chilanka', cursive; /* Font chữ cho body */
-    --heading-font: 'Chilanka', cursive; /* Font chữ cho tiêu đề */
-    --secondary-font: 'Montserrat', sans-serif; /* Font chữ phụ */
-
-  }
+    --body-font: 'Roboto', sans-serif; /* Font chữ cho body */
+    --heading-font: 'Roboto', sans-serif; /* Font chữ cho tiêu đề */
+    --secondary-font: 'Roboto', sans-serif; /* Font chữ phụ */
+}
   .custom-container {
     padding-left: 50px; /* Lùi vào bên trái */
     padding-right: 50px; /* Lùi vào bên phải */
