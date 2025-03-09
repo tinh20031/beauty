@@ -1,10 +1,8 @@
 package com.beautytouch.beautytouch.controller;
 
-import com.beautytouch.beautytouch.entity.BeautyService;
-import com.beautytouch.beautytouch.entity.Studio;
-import com.beautytouch.beautytouch.entity.StudioService;
-import com.beautytouch.beautytouch.entity.User;
+import com.beautytouch.beautytouch.entity.*;
 import com.beautytouch.beautytouch.repositories.Service_StudioRepositories;
+import com.beautytouch.beautytouch.services.ReviewService;
 import com.beautytouch.beautytouch.services.Studio_Service;
 import com.beautytouch.beautytouch.services.Studio_ServiceService;
 import com.beautytouch.beautytouch.services.UserService;
@@ -28,6 +26,8 @@ public class Studio_ServiceController {
     private UserService userService;
     @Autowired
     private Studio_Service studio_service;
+    @Autowired
+    ReviewService reviewService;
 @Autowired
     Service_StudioRepositories service_studioRepositories;
     // Constructor injection
@@ -41,10 +41,11 @@ public class Studio_ServiceController {
         Studio studio = studio_serviceService.GetStudioById(studioId);
 
         List<StudioService> services = studio_serviceService.getServicesByStudioId(studioId);
-
+        List<Review> reviews = reviewService.getReviewsByStudioId(studioId);
         // Thêm vào model
         model.addAttribute("studio", studio);
         model.addAttribute("services", services);
+        model.addAttribute("reviews", reviews);
 
         return "shop_detail";
     }

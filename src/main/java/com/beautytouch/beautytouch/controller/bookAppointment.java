@@ -1,9 +1,6 @@
 package com.beautytouch.beautytouch.controller;
 
-import com.beautytouch.beautytouch.entity.Studio;
-import com.beautytouch.beautytouch.entity.StudioService;
-import com.beautytouch.beautytouch.entity.User;
-import com.beautytouch.beautytouch.entity.appointments;
+import com.beautytouch.beautytouch.entity.*;
 import com.beautytouch.beautytouch.services.*;
 import org.cloudinary.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -43,6 +41,8 @@ public class bookAppointment {
     @Autowired
     AppointmentService appointmentService;
 
+    @Autowired
+    ReviewService reviewService;
     @PostMapping("/bookAppointment")
     public String bookAppointment(@RequestParam("studioId") Integer studioId,
                                   @RequestParam("serviceId") Integer serviceId,
@@ -83,7 +83,68 @@ public class bookAppointment {
 
         return "view-appointment"; // Tên của file HTML hiển thị danh sách lịch hẹn
     }
+    @GetMapping("/review-appointment")
+    public String showReviewForm(@RequestParam("appointmentId") Integer appointmentId, Model model) {
+        appointments appointment = appointmentService.getAppointmentById(appointmentId);
+        if (appointment == null || !"confirmed".equals(appointment.getStatus())) {
+            return "redirect:/list-appointments"; // Quay lại nếu không hợp lệ
+        }
 
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("studio", appointment.getStudio());
+        model.addAttribute("service", appointment.getService());
+        return "review-form"; // Trang form đánh giá
+    }
+    @PostMapping("/studios/{studioId}/reviews")
+    public String saveReview(@PathVariable Integer studioId,
+                             @RequestParam Integer appointmentId,
+                             @RequestParam Integer rating,
+                             @RequestParam String comment,
+                             Model model) {
+        try {
+            // Lấy studio từ DB
+            Studio studio = studio_service.GetStudioById(studioId);
+            if (studio == null) {
+                model.addAttribute("error", "Studio không tồn tại.");
+                return "review-form";
+            }
+
+            // Lấy user hiện tại
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            User user = userService.getUser(username);
+            if (user == null) {
+                model.addAttribute("error", "Người dùng không tồn tại.");
+                return "review-form";
+            }
+
+            // Lấy service từ appointment (giả định appointment chứa service)
+            appointments appointment = appointmentService.getAppointmentById(appointmentId);
+            if (appointment == null) {
+                model.addAttribute("error", "Lịch hẹn không tồn tại.");
+                return "review-form";
+            }
+            StudioService service = appointment.getService();
+
+            // Tạo đối tượng Review
+            Review review = new Review();
+            review.setRating(rating);
+            review.setComment(comment);
+            review.setStudio(studio);
+            review.setUser(user);
+            review.setService(service);
+
+            // Lưu vào DB
+            reviewService.saveReview(review);
+
+            // Thêm thông báo thành công
+            model.addAttribute("message", "Đánh giá đã được gửi thành công!");
+            return "redirect:/list-appointments";
+        } catch (Exception e) {
+            model.addAttribute("error", "Đã xảy ra lỗi khi gửi đánh giá. Vui lòng thử lại! " + e.getMessage());
+            return "review-form";
+        }
+    }
     @PostMapping("/delete-id-appointments")
     public String deleteAppointment(@RequestParam("id") Integer id) {
         try {
